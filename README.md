@@ -5,6 +5,9 @@
     - npm create vite@latest netflix-gpt -- --template react
 
     - configure tailwindcss (add 'import-statement' in App.css)
+    - Header
+    - Login Form
+    - SignUp Form
 
 
 ---
@@ -26,3 +29,10 @@
     - NetflixGPT
         - Search Bar
         - Movie Suggestions
+
+
+---
+
+# Notes
+    - (If you have lot of i/p-fields in a form)
+        - go ahead & use "FORMIK" - library (for handling forms like validations, etc) 

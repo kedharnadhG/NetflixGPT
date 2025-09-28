@@ -77,6 +77,7 @@ const Login = () => {
   return (
     <div>
       <Header />
+      {/* Background Image */}
       <div className="absolute">
         <img
           src="https://assets.nflxext.com/ffe/siteui/vlv3/05e91faa-6f6d-4325-934e-5418dcc2567b/web/IN-en-20250630-TRIFECTA-perspective_159086b1-425f-435b-bcd5-1ed8039cdef9_large.jpg"
@@ -84,6 +85,7 @@ const Login = () => {
           className="min-h-screen w-full object-cover"
         />
       </div>
+      {/* Login Form  */}
       <form
         onSubmit={(e) => e.preventDefault()}
         className="w-3/12 absolute z-50 bg-black/75 p-12 text-white my-36 rounded-lg mx-auto right-0 left-0 "
@@ -124,10 +126,17 @@ const Login = () => {
         >
           Sign {isSignInForm ? "In" : "Up"}
         </button>
-        <p className="py-3 text-sm cursor-pointer" onClick={toggleSignInForm}>
-          {isSignInForm
-            ? "New to Netflix? Sign up now."
-            : "Already registered? Sign in now."}
+        <p className="py-3 text-sm cursor-pointer flex item-center" onClick={toggleSignInForm}>
+          {isSignInForm ? (
+            <>
+              New to Netflix? <span className="font-bold ml-1">Sign up Now.</span>
+            </>
+          ) : (
+            <>
+              Already registered?{" "}
+              <span className="font-bold ml-1">Sign in Now.</span>
+            </>
+          )}
         </p>
       </form>
     </div>

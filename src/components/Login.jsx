@@ -20,8 +20,6 @@ const Login = () => {
   };
 
   const handleButtonClick = () => {
-    // validate the form Data
-
     if (isSignInForm) {
       const message = checkValidData(
         email.current.value,
@@ -30,67 +28,62 @@ const Login = () => {
       setErrorMessage(message);
       if (message) return;
 
-      // proceed for signIn
+      // sign in
       signInWithEmailAndPassword(
         auth,
         email.current.value,
         password.current.value
       )
         .then((userCredential) => {
-          // Signed in
-          const user = userCredential.user;
-          console.log("user", user);
+          console.log("user", userCredential.user);
         })
         .catch((error) => {
-          // const errorCode = error.code;
-          const errorMessage = error.message;
-          setErrorMessage(errorMessage);
+          setErrorMessage(error.message);
         });
     } else {
       const message = checkValidData(
         email.current.value,
-        password.current.value
+        password.current.value,
+        userName.current.value
       );
       setErrorMessage(message);
       if (message) return;
 
-      // proceed for signUp
+      // sign up
       createUserWithEmailAndPassword(
         auth,
         email.current.value,
-        password.current.value,
-        userName.current.value
+        password.current.value
       )
         .then((userCredential) => {
-          // Signed up
-          const user = userCredential.user;
-          console.log("user", user);
+          console.log("user", userCredential.user);
         })
         .catch((error) => {
-          // const errorCode = error.code;
-          const errorMessage = error.message;
-          setErrorMessage(errorMessage);
+          setErrorMessage(error.message);
         });
     }
   };
 
   return (
-    <div>
+    <div className="relative h-screen w-screen">
       <Header />
+
       {/* Background Image */}
-      <div className="absolute">
+      <div className="absolute inset-0">
         <img
           src="https://assets.nflxext.com/ffe/siteui/vlv3/05e91faa-6f6d-4325-934e-5418dcc2567b/web/IN-en-20250630-TRIFECTA-perspective_159086b1-425f-435b-bcd5-1ed8039cdef9_large.jpg"
           alt="logo"
-          className="min-h-screen w-full object-cover"
+          className="h-full w-full object-cover"
         />
+        <div className="absolute inset-0 bg-black/50"></div>
       </div>
-      {/* Login Form  */}
+
+      {/* Login Form */}
       <form
         onSubmit={(e) => e.preventDefault()}
-        className="w-3/12 absolute z-50 bg-black/75 p-12 text-white my-36 rounded-lg mx-auto right-0 left-0 "
+        className="absolute z-50 w-11/12 sm:w-8/12 md:w-6/12 lg:w-4/12 xl:w-3/12 bg-black/70 p-8 md:p-12 text-white rounded-lg mx-auto left-0 right-0 top-1/2 transform -translate-y-1/2"
       >
-        <h1 className="text-3xl font-bold py-4">
+        <h1 className="text-2xl md:text-3xl font-bold py-4 text-center">
           Sign {isSignInForm ? "In" : "Up"}
         </h1>
 
@@ -99,42 +92,46 @@ const Login = () => {
             ref={userName}
             type="text"
             placeholder="Enter your name"
-            className="p-2 my-2 bg-gray-700 rounded-md text-white w-full"
+            className="p-3 my-2 bg-gray-700 rounded-md text-white w-full text-sm md:text-base"
           />
         )}
         <input
           ref={email}
           type="text"
           placeholder="Enter your Email"
-          className="p-2 my-3 bg-gray-700 rounded-md text-white w-full"
+          className="p-3 my-2 bg-gray-700 rounded-md text-white w-full text-sm md:text-base"
         />
         <input
           ref={password}
           type="password"
           placeholder="Password"
-          className="p-2 my-2 bg-gray-700 rounded-md text-white w-full"
+          className="p-3 my-2 bg-gray-700 rounded-md text-white w-full text-sm md:text-base"
         />
 
-        <p className="text-red-500 font-bold py-2">
-          {" "}
-          {errorMessage !== null && errorMessage}
+        <p className="text-red-500 font-medium py-2">
+          {errorMessage && errorMessage}
         </p>
 
         <button
-          className="p-3 my-8 bg-red-700 rounded-md w-full cursor-pointer"
+          className="p-3 my-6 bg-red-600 hover:bg-red-700 rounded-md w-full text-sm md:text-base"
           onClick={handleButtonClick}
         >
           Sign {isSignInForm ? "In" : "Up"}
         </button>
-        <p className="py-3 text-sm cursor-pointer flex item-center" onClick={toggleSignInForm}>
+
+        <p
+          className="py-3 text-center text-sm md:text-base cursor-pointer flex justify-center"
+          onClick={toggleSignInForm}
+        >
           {isSignInForm ? (
             <>
-              New to Netflix? <span className="font-bold ml-1">Sign up Now.</span>
+              New to Netflix?
+              <span className="font-bold ml-1">Sign up now.</span>
             </>
           ) : (
             <>
-              Already registered?{" "}
-              <span className="font-bold ml-1">Sign in Now.</span>
+              Already registered?
+              <span className="font-bold ml-1">Sign in now.</span>
             </>
           )}
         </p>

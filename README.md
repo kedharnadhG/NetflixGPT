@@ -19,7 +19,7 @@
     - SignUp & SignIn functionality implementation
     - (After authentication) store userInfo in Redux-Store (install dependencies) ("npm i -D @reduxjs/toolkit" & "npm i react-redux")
 
-    - create Store (configureStore)
+    - created Redux Store (configureStore)
     - create Slice (userSlice)
     - create Actions (userSlice)
     - add userSlice in Store
@@ -28,7 +28,12 @@
 
     - we have to addUser/removeUser (dispatch an action) to store right, (i.e when he signIn/signUp/signOut) instead of doing sameThing again & again, fireBase gives us an utility i.e known as "onAuthStateChanged"
 
-    (firebase doc > (search) firebase Authentication > web > manageUsers > onAuthStateChanged API) this API calls whenever a state-change happens
+    (firebase doc > (search) firebase Authentication > web > manageUsers > "onAuthStateChanged" API) this API calls whenever a state-change happens (authentication-state changes) (it's kind of like a "Event-listener")
+
+    - implemented Sign-Out functionality
+    - update Profile ( api-call )
+
+    - Fetch movies from TMDB (api)
 
 ---
 
@@ -83,7 +88,7 @@
     - use an existing project
     - select the project
     - What do you want to use as your public directory?  (dist)  (since vite)
-    - Configure as a single-page app (rewrite all urls to /index.html)? (yes)
+    - Configure as a single-page app (rewrite all urls to /index.html)? (no)
     -
 
     - (Before deploying)
@@ -98,4 +103,4 @@
             - npm install -g firebase-tools
             - firebase login
             - firebase init  (then selecting Hosting)
-            - firebase deploy
+            - firebase deploy      ( by this we can deploy whenever we want to, in hand control)

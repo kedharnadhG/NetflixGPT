@@ -4,12 +4,19 @@ import { checkValidData } from "../utils/validate";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const email = useRef(null);
   const password = useRef(null);
@@ -35,9 +42,12 @@ const Login = () => {
         password.current.value
       )
         .then((userCredential) => {
-          console.log("user", userCredential.user);
+          // console.log("user", userCredential.user);
+          const user = userCredential.user;
+          navigate("/browse");
         })
         .catch((error) => {
+          // console.log(error);
           setErrorMessage(error.message);
         });
     } else {
@@ -56,10 +66,28 @@ const Login = () => {
         password.current.value
       )
         .then((userCredential) => {
-          console.log("user", userCredential.user);
+          // console.log("user", userCredential.user);
+          const user = userCredential.user;  // it doesn't have displayName & photoURL yet
+
+          // update user profile (displayName, photoURL)
+          updateProfile(user, {
+            displayName: userName.current.value,
+            photoURL: "https://avatars.githubusercontent.com/u/67498592?v=4",
+          })
+            .then(() => {
+              // update the store also again, since we are updating the profile after creating user, but by the time onAuthStateChanged() is called (in Body.jsx), the profile is not updated yet, so we have to update the store also again here
+              const {uid, email, displayName, photoURL} = auth.currentUser;   // getting the details from updated currentUser
+              dispatch(addUser({ uid: uid, email: email, displayName: displayName, photoURL: photoURL }));
+              navigate("/browse");
+            })
+            .catch((error) => {
+              setErrorMessage(error.message);
+            });
+
+
         })
         .catch((error) => {
-          setErrorMessage(error.message);
+          setErrorMessage( error.code + "-" + error.message);
         });
     }
   };

@@ -17,7 +17,8 @@ const userSlice = createSlice(
             removeUser: (state, action) => {
                 state = null;
                 return state;
-                //  return null;
+                //  return null;       // we can just write like this also
+                
             }
         }
     }

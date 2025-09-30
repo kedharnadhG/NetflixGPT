@@ -1,16 +1,9 @@
-import React, { useEffect } from "react";
+import React  from "react";
 import Login from "./Login";
 import Browse from "./Browse";
-import { createBrowserRouter, RouterProvider, useNavigate } from "react-router-dom";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../utils/firebase";
-import { useDispatch } from "react-redux";
-import { addUser, removeUser } from "../utils/userSlice";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 const Body = () => {
-
-  const dispatch = useDispatch();
-  // const navigate = useNavigate();
 
   const appRouter = createBrowserRouter([
     {
@@ -24,23 +17,8 @@ const Body = () => {
   ]);
 
 
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        //if user is signed-In / signUp
-
-        const {uid, email, displayName, photoURL} = user;
-        dispatch(addUser({ uid: uid, email: email, displayName: displayName, photoURL: photoURL }));
-
-        // navigate("/browse");       // since we can't navigate to other-pages since it's outside the RouterProvider, let's navigate in the Login.jsx itself after successful signIn/signUp
-
-      } else {
-        // if user is signed out
-        dispatch(removeUser());
-        // navigate("/");
-      }
-    });
-  }, []);
+  // since the header-page is always there/visible, so we call the useEffect() that checks the auth-state-change in Header.jsx component
+  // if we keep it here in body, the navigate() won't work, because the body component is not inside the RouterProvider component, so it will throw error. So we have to keep it inside the RouterProvider component.
 
   return (
     <div>

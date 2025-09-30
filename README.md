@@ -33,6 +33,11 @@
     - implemented Sign-Out functionality
     - update Profile ( api-call )
 
+    - Bug-Fix1 : Sign up user displayName and profile picture update
+    - Bug-Fix2 : if the user is not logged in Redirect /broswse to login Page and vice-versa.
+
+    - Bug-Fix3 : "unsubscribe" to the onAuthStateChanged listener when the component is unmounted ( to avoid memory-leaks, it's like "Event-listener" that is listening to a specific event, (i.e when the component is unmounted) it should stop listening to that event, so we have to unsubscribe it.)
+
     - Fetch movies from TMDB (api)
 
 ---

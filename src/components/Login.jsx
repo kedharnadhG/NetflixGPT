@@ -10,6 +10,7 @@ import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { BACKGROUND_IMAGE_URL, PHOTO_URL } from "../utils/constants";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
@@ -42,9 +43,7 @@ const Login = () => {
         password.current.value
       )
         .then((userCredential) => {
-          // console.log("user", userCredential.user);
           const user = userCredential.user;
-          navigate("/browse");
         })
         .catch((error) => {
           // console.log(error);
@@ -72,13 +71,13 @@ const Login = () => {
           // update user profile (displayName, photoURL)
           updateProfile(user, {
             displayName: userName.current.value,
-            photoURL: "https://avatars.githubusercontent.com/u/67498592?v=4",
+            photoURL: {PHOTO_URL},
           })
             .then(() => {
               // update the store also again, since we are updating the profile after creating user, but by the time onAuthStateChanged() is called (in Body.jsx), the profile is not updated yet, so we have to update the store also again here
               const {uid, email, displayName, photoURL} = auth.currentUser;   // getting the details from updated currentUser
               dispatch(addUser({ uid: uid, email: email, displayName: displayName, photoURL: photoURL }));
-              navigate("/browse");
+              
             })
             .catch((error) => {
               setErrorMessage(error.message);
@@ -99,7 +98,7 @@ const Login = () => {
       {/* Background Image */}
       <div className="absolute inset-0">
         <img
-          src="https://assets.nflxext.com/ffe/siteui/vlv3/05e91faa-6f6d-4325-934e-5418dcc2567b/web/IN-en-20250630-TRIFECTA-perspective_159086b1-425f-435b-bcd5-1ed8039cdef9_large.jpg"
+          src= {BACKGROUND_IMAGE_URL}
           alt="logo"
           className="h-full w-full object-cover"
         />

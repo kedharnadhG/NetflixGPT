@@ -1,33 +1,66 @@
 import React, { useEffect } from "react";
 import { auth } from "../utils/firebase";
-import { signOut } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addUser, removeUser } from "../utils/userSlice";
+import { LOGO, PHOTO_URL, SIGN_OUT_ICON } from "../utils/constants";
 
 const Header = () => {
 
   const navigate = useNavigate();
-  
+  const dispatch = useDispatch();
+
   const user = useSelector(store => store.user);
 
   const handleSignOut = () => { 
     // sign out user
      signOut(auth)
       .then(() => {
-        // Sign-out successful.     
-        navigate("/");       // dispath-action will happen automatically because we have used "onAuthStateChanged" API (in App.jsx) which listens to auth-state change
+        // Sign-out successful.    
+        // onAuthStateChanged() will be called, so no need to do anything here, ( everything is handled in onAuthStateChanged() )
       })
       .catch((error) => {
         // An error happened.
+        console.log(error);
         navigate("/error");
       });
   }
 
+  useEffect(() => {
+     // i have to unsubscribe this listener, when this component is unmounted (because it's a good practice to avoid memory-leak)
+     const unsubscribe = onAuthStateChanged(auth, (user) => {
+       if (user) {
+         //if user is signed-In / signUp
+
+         const { uid, email, displayName, photoURL } = user;
+         dispatch(
+           addUser({
+             uid: uid,
+             email: email,
+             displayName: displayName,
+             photoURL: photoURL,
+           })
+         );
+
+         navigate("/browse"); // since the header-page is under RouterProvider component, so we can use navigate() here it will work fine
+       } else {
+         // if user is signed out
+         dispatch(removeUser());
+         navigate("/");
+       }
+     });
+    
+    // unsubscribe when component unmounts
+    return () =>  unsubscribe();
+    
+    
+   }, []);
   
   return (
     <div className="absolute z-10 flex justify-between w-screen px-8 py-2 bg-gradient-to-b from-black">
       <img
-        src="https://help.nflxext.com/helpcenter/OneTrust/oneTrust_production_2025-07-01/consent/87b6a5c0-0104-4e96-a291-092c11350111/01938dc4-59b3-7bbc-b635-c4131030e85f/logos/dd6b162f-1a32-456a-9cfe-897231c7763c/4345ea78-053c-46d2-b11e-09adaef973dc/Netflix_Logo_PMS.png"
+        src={LOGO}
         alt="logo"
         className="w-44"
       />
@@ -39,15 +72,16 @@ const Header = () => {
             alt="netflix-userIcon"
             src={
               user.photoURL ||
-              "https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png"
+              PHOTO_URL
             }
           />
           <img
-            className="w-6 h-6 cursor-pointer"
+            className="w-6 h-6 cursor-pointer hover:"
             alt="signOut-icon"
-            src={"https://cdn-icons-png.flaticon.com/512/1828/1828479.png"}
+            src={SIGN_OUT_ICON}
             onClick={handleSignOut}
           />
+        <span className="hidden :hover:visible">LogOut</span>
         </div>
       )}
     </div>

@@ -81,7 +81,6 @@ const Header = () => {
             src={SIGN_OUT_ICON}
             onClick={handleSignOut}
           />
-        <span className="hidden :hover:visible">LogOut</span>
         </div>
       )}
     </div>

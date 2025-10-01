@@ -8,7 +8,9 @@ export const checkValidData = (email, password, userName = null) => {
     );
 
   if (userName !== null) {
-    const isUserNameValid = /^[A-Za-z]{3,}$/.test(userName);
+    const isUserNameValid = /^[A-Za-z\s+]{3,}(?:\s[A-Za-z\s+]{3,})?$/.test(
+      userName
+    );
 
     if (!isUserNameValid) {
       return "User Name is not valid.";

@@ -71,7 +71,7 @@ const Login = () => {
           // update user profile (displayName, photoURL)
           updateProfile(user, {
             displayName: userName.current.value,
-            photoURL: {PHOTO_URL},
+            photoURL: PHOTO_URL,
           })
             .then(() => {
               // update the store also again, since we are updating the profile after creating user, but by the time onAuthStateChanged() is called (in Body.jsx), the profile is not updated yet, so we have to update the store also again here
@@ -125,12 +125,14 @@ const Login = () => {
         <input
           ref={email}
           type="text"
+          defaultValue={email.current?.value || "test@gmail.com"}
           placeholder="Enter your Email"
           className="p-3 my-2 bg-gray-700 rounded-md text-white w-full text-sm md:text-base"
         />
         <input
           ref={password}
           type="password"
+          defaultValue={password.current?.value || "Test@123"}
           placeholder="Password"
           className="p-3 my-2 bg-gray-700 rounded-md text-white w-full text-sm md:text-base"
         />

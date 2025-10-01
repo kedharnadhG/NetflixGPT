@@ -1,29 +1,27 @@
-import React, { useEffect } from 'react'
-import { API_OPTIONS } from '../utils/constants';
+import React from "react";
+import { useSelector } from "react-redux";
+import useMovieTrailer from "../hooks/useMovieTrailer";
+const VideoBackground = ({ movieId }) => {
+  const trailerVideo = useSelector((store) => store.movies?.trailerVideo);
 
-const VideoBackground = ({movieId}) => {
-
-    // fetch trailer video using movieId
-    const getMovieVideos = async () => {
-        const data = await fetch(
-          "https://api.themoviedb.org/3/movie/1267319/videos?language=en-US",
-          API_OPTIONS
-        );
-        const json = await data.json();
-        console.log("getMovieVideos - json:", json);
-
-        const filterData = json.results.filter(video => video.type === "Trailer" && video.site === "YouTube");
-        const trailer = filterData[0];
-        console.log("getMovieVideos - trailer:", trailer);
-    }
-
-    useEffect(() => {
-        getMovieVideos();
-    }, [])
+  useMovieTrailer(movieId);
 
   return (
-    <div>VideoBackground</div>
-  )
-}
+    <div className="">
+      <iframe
+        className="w-screen aspect-video"
+        src={
+          "https://www.youtube.com/embed/" +
+          trailerVideo?.key +
+          "?autoplay=1&mute=1&controls=0&loop=1&rel=0&playlist=" +
+          trailerVideo?.key
+        }
+        title="YouTube video player"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerPolicy="strict-origin-when-cross-origin"
+      ></iframe>
+    </div>
+  );
+};
 
-export default VideoBackground
+export default VideoBackground;

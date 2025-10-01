@@ -3,8 +3,6 @@ export const LOGO =
   
 export const PHOTO_URL = "https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png";
 
-export const SIGN_OUT_ICON = "https://cdn-icons-png.flaticon.com/512/1828/1828479.png";
-
 export const BACKGROUND_IMAGE_URL = "https://assets.nflxext.com/ffe/siteui/vlv3/05e91faa-6f6d-4325-934e-5418dcc2567b/web/IN-en-20250630-TRIFECTA-perspective_159086b1-425f-435b-bcd5-1ed8039cdef9_large.jpg";
 
 

@@ -48,6 +48,14 @@
         - Register TMDB API & create an app & get access token
         - Get Data from TMDB now playing movies-list (api-call in Browse-page)
         - put the data in Redux-Store (in browse-page)
+    - Custom hook for Now Playing Movies
+    - Create movieSlice
+    - Update Store with movies Data
+    - Planning for MainContainer & secondary Container
+    - Fetch Data for Trailer Video
+    - Update Store with Trailer Video Data
+    - Embedded the Youtube video and make it autoplay and mute
+    - Tailwind Classes to make MainContainer look awesome
 
 ---
 

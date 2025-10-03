@@ -1,0 +1,27 @@
+import { useDispatch } from "react-redux";
+import { addUpComingMovies } from "../utils/moviesSlice";
+import { API_OPTIONS } from "../utils/constants";
+import { useEffect } from "react";
+
+const useUpComingMovies = () => {
+  const dispatch = useDispatch();
+
+  // nowPlaying-movies api-call from TMDB, & updating the redux-store with the fetched data
+  const getUpComingMovies = async () => {
+    const data = await fetch(
+      "https://api.themoviedb.org/3/movie/upcoming?page=1",
+      API_OPTIONS
+    );
+
+    const jsonData = await data.json();
+    // console.log("now playing movies:", jsonData.results);
+    dispatch(addUpComingMovies(jsonData.results));
+  };
+
+  // why we are making api-call in useEffect?  => because we want to make this api-call only once (when this component loads for the first time)
+  useEffect(() => {
+    getUpComingMovies();
+  }, []);
+};
+
+export default useUpComingMovies;

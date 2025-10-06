@@ -4,14 +4,17 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
-import { LOGO, PHOTO_URL } from "../utils/constants";
-import { LogOut } from "lucide-react";
+import { LOGO, PHOTO_URL, SUPPORTED_LANGUAGES } from "../utils/constants";
+import { LogOut, SearchIcon } from "lucide-react";
+import { toggleGptSearchView } from "../utils/gptSlice";
+import { changeLanguage } from "../utils/configSlice";
 
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const user = useSelector((store) => store.user);
+  const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
 
   const handleSignOut = () => {
     // sign out user
@@ -25,6 +28,15 @@ const Header = () => {
         console.log(error);
         navigate("/error");
       });
+  };
+
+  const handleGptSearchClick = () => {
+    // Toggle GPT Search functionality
+    dispatch(toggleGptSearchView());
+  };
+
+  const handleLanguageChange = (e) => {
+    dispatch(changeLanguage(e.target.value));
   };
 
   useEffect(() => {
@@ -60,7 +72,33 @@ const Header = () => {
       <img src={LOGO} alt="logo" className="w-44" />
       {user && (
         <div className="p-2 flex m-2 gap-4 items-center justify-between text-white text-sm md:text-base">
-          {/* <img alt="netflix-userIcon" src="https://i.imgur.com/dk4Wyhp.png" /> */}
+          {showGptSearch && (
+            <select
+              name="language"
+              id="language"
+              className="bg-black text-white border border-gray-700 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-600 hover:border-purple-500 transition duration-200"
+              onChange={handleLanguageChange}
+            >
+              {SUPPORTED_LANGUAGES.map((language) => (
+                <option
+                  className="bg-black text-white"
+                  key={language.identifier}
+                  value={language.identifier}
+                >
+                  {language.name}
+                </option>
+              ))}
+            </select>
+          )}
+
+          <button
+            className="flex items-center py-2 px-4 mx-2 bg-purple-700 hover:bg-purple-500 text-white font-semibold rounded-lg shadow-md transition-colors duration-200"
+            onClick={handleGptSearchClick}
+          >
+            { !showGptSearch && <SearchIcon className="mr-2" size={20} />}
+            {showGptSearch ? "Home Page" : "GPT Search"}
+          </button>
+
           <img
             className="w-12 h-12 cursor-pointer rounded-xl"
             alt="netflix-userIcon"

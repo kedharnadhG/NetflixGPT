@@ -56,6 +56,17 @@
     - Update Store with Trailer Video Data
     - Embedded the Youtube video and make it autoplay and mute
     - Tailwind Classes to make MainContainer look awesome
+    - Build SecondaryContainer Component
+    - Build MovieList Component
+    - TMDB Image CDN URL
+    - Made the Browse page amazing with Tailwind CSS
+    - usePopularMovies, useTopRatedMovies, useUpComingMovies hooks
+
+## Using GPT as a Movie-Recommendation System ( OpenAI's GPT-3.5 API's )
+    - GPT Search Feature
+    - GPT Search Page (done)
+    - GPT Search Bar
+    - (**) Multi-Language Support feature
 
 ---
 

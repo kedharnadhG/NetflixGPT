@@ -6,7 +6,7 @@ import { BACKGROUND_IMAGE_URL } from "../utils/constants";
 const GptSearch = () => {
   return (
     <div>
-      <div className="absolute inset-0 -z-10 h-[100vh] w-screen">
+      <div className="fixed inset-0 -z-10 h-[100vh] w-screen">
         <img
           src={BACKGROUND_IMAGE_URL}
           alt="logo"

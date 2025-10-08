@@ -74,14 +74,12 @@ const GptSearchBar = () => {
 
       const gptMovies = text.split(",").map((movie) => movie.trim());
 
-      console.log("GPT Movies:", gptMovies);
 
       // for each movie, we find out the TMDB API
       const tmdbMoviesData = await Promise.all(
         gptMovies.map((movie) => searchMovieTMDB(movie))
       ); // why using promise.all here? => basically, the map function returns an array of promises, and we can use Promise.all to wait for all the promises to resolve and then get the results as an array.
 
-      // console.log("TMDB Movies:", tmdbMoviesData.flat());
 
       dispatch(
         addGptMovieResult({

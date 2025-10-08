@@ -44,7 +44,6 @@ const Login = () => {
           const user = userCredential.user;
         })
         .catch((error) => {
-          // console.log(error);
           setErrorMessage(error.message);
         });
     } else {
@@ -63,7 +62,6 @@ const Login = () => {
         password.current.value
       )
         .then((userCredential) => {
-          // console.log("user", userCredential.user);
           const user = userCredential.user; // it doesn't have displayName & photoURL yet
 
           // update user profile (displayName, photoURL)

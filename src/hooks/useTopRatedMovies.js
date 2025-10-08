@@ -1,10 +1,13 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addTopRatedMovies } from "../utils/moviesSlice";
 import { API_OPTIONS } from "../utils/constants";
 import { useEffect } from "react";
 
 const useTopRatedMovies = () => {
   const dispatch = useDispatch();
+
+  //MEMOIZATION
+  const topRatedMovies = useSelector((store) => store.movies.topRatedMovies);
 
   // nowPlaying-movies api-call from TMDB, & updating the redux-store with the fetched data
   const getTopRatedMovies = async () => {
@@ -20,7 +23,8 @@ const useTopRatedMovies = () => {
 
   // why we are making api-call in useEffect?  => because we want to make this api-call only once (when this component loads for the first time)
   useEffect(() => {
-    getTopRatedMovies();
+    //MEMOIZATION
+    !topRatedMovies && getTopRatedMovies();
   }, []);
 };
 

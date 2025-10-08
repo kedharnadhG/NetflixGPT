@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Header from "./Header";
 import { checkValidData } from "../utils/validate";
 import {
@@ -7,7 +7,6 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import { BACKGROUND_IMAGE_URL, PHOTO_URL } from "../utils/constants";
@@ -16,7 +15,6 @@ const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
 
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const email = useRef(null);
@@ -66,7 +64,7 @@ const Login = () => {
       )
         .then((userCredential) => {
           // console.log("user", userCredential.user);
-          const user = userCredential.user;  // it doesn't have displayName & photoURL yet
+          const user = userCredential.user; // it doesn't have displayName & photoURL yet
 
           // update user profile (displayName, photoURL)
           updateProfile(user, {
@@ -75,21 +73,40 @@ const Login = () => {
           })
             .then(() => {
               // update the store also again, since we are updating the profile after creating user, but by the time onAuthStateChanged() is called (in Body.jsx), the profile is not updated yet, so we have to update the store also again here
-              const {uid, email, displayName, photoURL} = auth.currentUser;   // getting the details from updated currentUser
-              dispatch(addUser({ uid: uid, email: email, displayName: displayName, photoURL: photoURL }));
-              
+              const { uid, email, displayName, photoURL } = auth.currentUser; // getting the details from updated currentUser
+              dispatch(
+                addUser({
+                  uid: uid,
+                  email: email,
+                  displayName: displayName,
+                  photoURL: photoURL,
+                })
+              );
             })
             .catch((error) => {
               setErrorMessage(error.message);
             });
-
-
         })
         .catch((error) => {
-          setErrorMessage( error.code + "-" + error.message);
+          setErrorMessage(error.code + "-" + error.message);
         });
     }
   };
+
+  useEffect(() => {
+    // ensure refs exist
+    if (!email.current || !password.current) return;
+
+    if (isSignInForm) {
+      // set defaults only if the field is empty (so we don't clobber user-typed values)
+      if (!email.current.value) email.current.value = "test@gmail.com";
+      if (!password.current.value) password.current.value = "Test@123";
+    } else {
+      // if switching to signup, clear the default placeholders we set earlier
+      if (email.current.value === "test@gmail.com") email.current.value = "";
+      if (password.current.value === "Test@123") password.current.value = "";
+    }
+  }, [isSignInForm]);
 
   return (
     <div className="relative h-screen w-screen">
@@ -98,7 +115,7 @@ const Login = () => {
       {/* Background Image */}
       <div className="absolute inset-0">
         <img
-          src= {BACKGROUND_IMAGE_URL}
+          src={BACKGROUND_IMAGE_URL}
           alt="logo"
           className="h-full w-full object-cover"
         />
@@ -125,14 +142,18 @@ const Login = () => {
         <input
           ref={email}
           type="text"
-          defaultValue={email.current?.value || "test@gmail.com"}
+          defaultValue={
+            email.current?.value || (isSignInForm ? "test@gmail.com" : "")
+          }
           placeholder="Enter your Email"
           className="p-3 my-2 bg-gray-700 rounded-md text-white w-full text-sm md:text-base"
         />
         <input
           ref={password}
           type="password"
-          defaultValue={password.current?.value || "Test@123"}
+          defaultValue={
+            password.current?.value || (isSignInForm ? "Test@123" : "")
+          }
           placeholder="Password"
           className="p-3 my-2 bg-gray-700 rounded-md text-white w-full text-sm md:text-base"
         />

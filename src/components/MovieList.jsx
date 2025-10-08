@@ -1,8 +1,7 @@
-import React, { useRef } from "react";
+import React from "react";
 import MovieCard from "./MovieCard";
 
 const MovieList = ({ title, movies }) => {
-  
   return (
     <div className="px-6">
       <h1 className="text-2xl text-white py-4 font-medium">{title}</h1>

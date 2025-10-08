@@ -68,8 +68,8 @@ const Header = () => {
   }, []);
 
   return (
-    <div className="absolute z-10 flex justify-between w-screen px-8 py-2 bg-gradient-to-b from-black">
-      <img src={LOGO} alt="logo" className="w-44" />
+    <div className="absolute z-10 flex justify-between w-screen px-8 py-2 bg-gradient-to-b from-black flex-col md:flex-row">
+      <img src={LOGO} alt="logo" className="w-44 mx-auto md:mx-0" />
       {user && (
         <div className="p-2 flex m-2 gap-4 items-center justify-between text-white text-sm md:text-base">
           {showGptSearch && (
@@ -92,15 +92,15 @@ const Header = () => {
           )}
 
           <button
-            className="flex items-center py-2 px-4 mx-2 bg-purple-700 hover:bg-purple-500 text-white font-semibold rounded-lg shadow-md transition-colors duration-200"
+            className="flex items-center p-2 px-4 mx-2 bg-purple-700 hover:bg-purple-500 text-white font-semibold rounded-lg shadow-md transition-colors duration-200"
             onClick={handleGptSearchClick}
           >
-            { !showGptSearch && <SearchIcon className="mr-2" size={20} />}
-            {showGptSearch ? "Home Page" : "GPT Search"}
+            {!showGptSearch && <SearchIcon className="mr-2" size={20} />}
+            {showGptSearch ? "Home" : "GPT Search"}
           </button>
 
           <img
-            className="w-12 h-12 cursor-pointer rounded-xl"
+            className="w-12 h-12 hidden md:block cursor-pointer rounded-xl"
             alt="netflix-userIcon"
             src={user.photoURL || PHOTO_URL}
           />

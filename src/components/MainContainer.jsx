@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import VideoTitle from "./VideoTitle";
 import VideoBackground from "./VideoBackground";
+import ShimmerMovieList from "./shimmerUI/ShimmerMovieList";
 
 // here we need to show the video background and video title
 const MainContainer = () => {
@@ -10,7 +11,17 @@ const MainContainer = () => {
 
   // Early return if movies is undefined or empty
   if (!movies || movies === null || movies.length === 0) {
-    return <div>Loading...</div>;
+    return (
+      <div>
+        return (
+        <>
+          <ShimmerMovieList />
+          <ShimmerMovieList />
+          <ShimmerMovieList />
+        </>
+        );
+      </div>
+    );
   }
 
 
@@ -20,7 +31,7 @@ const MainContainer = () => {
   const { original_title, overview, id } = mainMovie;
 
   return (
-    <div>
+    <div className="md:pt-0 pt-[35%] relative bg-black/80">
       <VideoTitle title={original_title} overview={ overview} />
       <VideoBackground movieId={id} />
     </div>

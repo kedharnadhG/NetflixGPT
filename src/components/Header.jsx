@@ -104,11 +104,16 @@ const Header = () => {
             alt="netflix-userIcon"
             src={user.photoURL || PHOTO_URL}
           />
-          <LogOut
-            className="cursor-pointer hover:scale-110"
-            size={30}
-            onClick={handleSignOut}
-          />
+          <div className="relative group">
+            <LogOut
+              className="cursor-pointer hover:scale-110 transition-transform duration-200"
+              size={30}
+              onClick={handleSignOut}
+            />
+            <span className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 px-2 py-1 text-xs text-white bg-gray-800 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+              Logout
+            </span>
+          </div>
         </div>
       )}
     </div>

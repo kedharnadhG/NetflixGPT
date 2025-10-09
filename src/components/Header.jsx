@@ -22,6 +22,7 @@ const Header = () => {
       .then(() => {
         // Sign-out successful.
         // onAuthStateChanged() will be called, so no need to do anything here, ( everything is handled in onAuthStateChanged() )
+        dispatch({ type: "USER_SIGNOUT" });
       })
       .catch((error) => {
         // An error happened.

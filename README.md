@@ -62,11 +62,26 @@
     - Made the Browse page amazing with Tailwind CSS
     - usePopularMovies, useTopRatedMovies, useUpComingMovies hooks
 
-## Using GPT as a Movie-Recommendation System ( OpenAI's GPT-3.5 API's )
+## Using GPT as a Movie-Recommendation System ( GEMINI API's )
+
     - GPT Search Feature
     - GPT Search Page (done)
     - GPT Search Bar
     - (**) Multi-Language Support feature
+    - Get GEMINI API Key
+    - GenAI SDK
+    - GenAI API-Call
+    - fetched GptMovieSuggestions from TMDB
+    - created gptSlice & added it to store
+    - Reused MovieList Component to make movieSuggestions look awesome
+    - Memoization
+    - maintained .env file
+    - added .gitignore
+    - made the Website Responsive
+    - reInitialize the store to initialState after SignOut
+
+
+    - finally deployed to Vercel
 
 ---
 
@@ -138,16 +153,11 @@
             - firebase init  (then selecting Hosting)
             - firebase deploy      ( by this we can deploy whenever we want to, in hand control)
 
+---
 
+---
 
-
-
-
-
--------------------------------------------------
-------------------------------------------------
 # GEN_AI Notes
-
 
 ---
 
@@ -157,19 +167,21 @@
 
 ### **Gemini**
 
-* **Gemini** is Google’s family of Large Language Models (LLMs) — the successor to PaLM/LaMDA.
-* Built by **Google DeepMind**, it supports **multimodal input** (text, image, video, code, etc.).
-* Common variants include:
+- **Gemini** is Google’s family of Large Language Models (LLMs) — the successor to PaLM/LaMDA.
+- Built by **Google DeepMind**, it supports **multimodal input** (text, image, video, code, etc.).
+- Common variants include:
 
-  * `gemini-2.5-pro` → high accuracy, complex reasoning
-  * `gemini-2.5-flash` → balanced performance & latency
-  * `gemini-2.5-flash-lite` → fastest, cost-efficient
+  - `gemini-2.5-pro` → high accuracy, complex reasoning
+  - `gemini-2.5-flash` → balanced performance & latency
+  - `gemini-2.5-flash-lite` → fastest, cost-efficient
 
 📘 **Docs**: [ai.google.dev/gemini-api/docs](https://ai.google.dev/gemini-api/docs)
 
 ---
 
 ### **GenAI (SDK / API Client)**
+
+- npm-package : https://www.npmjs.com/package/@google/genai
 
 * **GenAI** = Google’s **official client library / SDK** for interacting with Gemini models.
 * It abstracts HTTP requests, authentication, and response parsing.
@@ -178,9 +190,9 @@
 
 🧩 So:
 
-> * **Model** → Gemini (e.g. `gemini-2.5-flash`)
-> * **Library** → GenAI SDK
-> * **Auth** → Gemini API key (from Google AI Studio)
+> - **Model** → Gemini (e.g. `gemini-2.5-flash`)
+> - **Library** → GenAI SDK
+> - **Auth** → Gemini API key (from Google AI Studio)
 
 ---
 
@@ -190,8 +202,8 @@
 
 | Factor   | Flash          | Pro             | Flash-Lite     |
 | -------- | -------------- | --------------- | -------------- |
-| Speed    | ⚡ Very Fast    | ⏳ Slower        | 🚀 Fastest     |
-| Quality  | ✅ High         | 🔥 Highest      | ⚖️ Medium      |
+| Speed    | ⚡ Very Fast   | ⏳ Slower       | 🚀 Fastest     |
+| Quality  | ✅ High        | 🔥 Highest      | ⚖️ Medium      |
 | Cost     | 💰 Moderate    | 💸 Higher       | 🪙 Cheapest    |
 | Use-case | Real-time apps | Heavy reasoning | Cost-sensitive |
 
@@ -200,9 +212,9 @@
 For a **movie recommendation UI**, users expect quick yet sensible replies.
 `gemini-2.5-flash` is the **sweet spot** — it balances:
 
-* Reasonable accuracy
-* Low latency
-* Cost-effectiveness
+- Reasonable accuracy
+- Low latency
+- Cost-effectiveness
 
 ---
 
@@ -230,19 +242,19 @@ const genAIresponse = await ai.models.generateContent({
 
 1. **SDK constructs HTTP request**
 
-   * Adds model name, generation config, contents.
-   * Attaches API key in headers.
+   - Adds model name, generation config, contents.
+   - Attaches API key in headers.
 
 2. **Gemini backend executes inference**
 
-   * Loads the `gemini-2.5-flash` model.
-   * Processes your input with tokenization + decoding.
-   * Applies your generation settings.
+   - Loads the `gemini-2.5-flash` model.
+   - Processes your input with tokenization + decoding.
+   - Applies your generation settings.
 
 3. **Response returned**
 
-   * SDK parses and returns JSON.
-   * You extract text like:
+   - SDK parses and returns JSON.
+   - You extract text like:
 
      ```js
      const result = genAIresponse.response.candidates[0].content.parts[0].text;
@@ -255,17 +267,17 @@ const genAIresponse = await ai.models.generateContent({
 | Category        | Gemini (2.5 Flash)            | GPT-4-Turbo           | Claude 3.5 Sonnet      |
 | --------------- | ----------------------------- | --------------------- | ---------------------- |
 | Ecosystem       | Google (AI Studio)            | OpenAI                | Anthropic              |
-| Latency         | ⚡ Fast                        | ⚖️ Medium             | ⚖️ Medium              |
+| Latency         | ⚡ Fast                       | ⚖️ Medium             | ⚖️ Medium              |
 | Cost            | 💰 Moderate                   | 💸 Slightly higher    | 💰 Moderate            |
 | Strengths       | Multimodal, tool integrations | Strong code reasoning | Natural writing style  |
 | SDK Integration | Easy with GenAI               | Needs OpenAI SDK      | Requires Anthropic SDK |
 
 ### 🤝 Why Stick With Gemini
 
-* Seamless integration with **Google services** & **AI Studio**.
-* **Multimodal input** support (text, image, video).
-* **“Thinking”** feature improves multi-step reasoning.
-* Better latency and token pricing for UI-heavy apps.
+- Seamless integration with **Google services** & **AI Studio**.
+- **Multimodal input** support (text, image, video).
+- **“Thinking”** feature improves multi-step reasoning.
+- Better latency and token pricing for UI-heavy apps.
 
 ---
 
@@ -291,10 +303,10 @@ const genAIresponse = await ai.models.generateContent({
 
 ---
 
--------------------------------------------------------------------------------
-
+---
 
 ---
+
 # Model Comparison: Gemini & LLM Alternatives
 
 ## 🧠 Model Comparison Table & Notes
@@ -315,40 +327,38 @@ Below is a comparison across key dimensions. After the table, I give deeper note
 
 #### **Gemini 2.5 Flash**
 
-* Google positions it as the “performance / latency optimized” variant of Gemini 2.5 family. ([Google AI for Developers][1])
-* Default “thinking” (internal reasoning) is enabled, giving it more nuance than older “flash-only” models. ([Google AI for Developers][1])
-* Architecture strives for a balance: good reasoning + speed. ([blog.google][3])
+- Google positions it as the “performance / latency optimized” variant of Gemini 2.5 family. ([Google AI for Developers][1])
+- Default “thinking” (internal reasoning) is enabled, giving it more nuance than older “flash-only” models. ([Google AI for Developers][1])
+- Architecture strives for a balance: good reasoning + speed. ([blog.google][3])
 
 #### **Gemini 2.5 Pro**
 
-* Engineered for more demanding, high-precision tasks: code, math, long documents. ([Google DeepMind][6])
-* Higher cost, more compute per request. ([Vapi][7])
-* Slower in simpler prompts because of deeper reasoning overhead.
-* Ideal when correctness, depth, or tool integrations matter over pure speed.
+- Engineered for more demanding, high-precision tasks: code, math, long documents. ([Google DeepMind][6])
+- Higher cost, more compute per request. ([Vapi][7])
+- Slower in simpler prompts because of deeper reasoning overhead.
+- Ideal when correctness, depth, or tool integrations matter over pure speed.
 
 #### **Gemini 2.5 Flash-Lite**
 
-* Announced in the Gemini 2.5 expansion as the most cost-efficient and fastest of the 2.5 family. ([blog.google][3])
-* “Thinking” is off by default, meaning it doesn’t apply deep reasoning in every query to save latency / cost. ([Google Developers Blog][2])
-* Good choice when you need many rapid, smaller tasks (e.g. classification, translation) rather than heavy generation.
+- Announced in the Gemini 2.5 expansion as the most cost-efficient and fastest of the 2.5 family. ([blog.google][3])
+- “Thinking” is off by default, meaning it doesn’t apply deep reasoning in every query to save latency / cost. ([Google Developers Blog][2])
+- Good choice when you need many rapid, smaller tasks (e.g. classification, translation) rather than heavy generation.
 
 #### **GPT-4 / GPT-4 Turbo**
 
-* Strong general-purpose model used widely for code, reasoning, conversation.
-* Its latency is often good for many use-cases, though in heavy tasks or high load it can slow down.
-* Has strong ecosystem, tooling, existing integrations.
-* For very large contexts, newer versions push the boundaries further.
+- Strong general-purpose model used widely for code, reasoning, conversation.
+- Its latency is often good for many use-cases, though in heavy tasks or high load it can slow down.
+- Has strong ecosystem, tooling, existing integrations.
+- For very large contexts, newer versions push the boundaries further.
 
 #### **Claude (Sonnet, Opus etc.)**
 
-* Often praised for consistency, writing style, handling long texts.
-* Might be more conservative in hallucinations or safer output in some cases.
-* Some versions emphasize text over multimodal / code features depending on edition.
-* Strong contender especially when context length, stability, and language fluency matter more than raw speed.
+- Often praised for consistency, writing style, handling long texts.
+- Might be more conservative in hallucinations or safer output in some cases.
+- Some versions emphasize text over multimodal / code features depending on edition.
+- Strong contender especially when context length, stability, and language fluency matter more than raw speed.
 
 ---
-
-
 
 [1]: https://ai.google.dev/gemini-api/docs/models?utm_source=chatgpt.com "Gemini models | Gemini API | Google AI for Developers"
 [2]: https://developers.googleblog.com/en/gemini-2-5-thinking-model-updates/?utm_source=chatgpt.com "Gemini 2.5: Updates to our family of thinking models"
@@ -357,4 +367,3 @@ Below is a comparison across key dimensions. After the table, I give deeper note
 [5]: https://muneebdev.com/gemini-2-5-pro-vs-flash/?utm_source=chatgpt.com "Gemini 2.5 Pro vs Flash: Features, API, Pricing & Benchmark ..."
 [6]: https://deepmind.google/models/gemini/pro/?utm_source=chatgpt.com "Gemini 2.5 Pro - Google DeepMind"
 [7]: https://vapi.ai/blog/gemini-flash-vs-pro?utm_source=chatgpt.com "Gemini Flash vs Pro: Understanding the Differences Between ... - Vapi"
-

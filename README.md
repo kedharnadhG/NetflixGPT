@@ -149,9 +149,6 @@
 # GEN_AI Notes
 
 
-Absolutely ✅ — here’s a clean, **Markdown-formatted version** of your notes about **Gemini vs GenAI**, model usage, and technical insights.
-This is formatted for direct placement in your `.md` reference file 👇
-
 ---
 
 # 🧠 Google GenAI & Gemini 2.5 Flash — In-Depth Notes
@@ -296,9 +293,9 @@ const genAIresponse = await ai.models.generateContent({
 
 -------------------------------------------------------------------------------
 
-Here’s a **detailed, side-by-side comparison** (in Markdown form) of **Gemini variants** (Flash, Pro, Flash-Lite) plus **other leading LLMs** (GPT-4, Claude, etc.). You can drop this into your `.md` reference file.
 
 ---
+# Model Comparison: Gemini & LLM Alternatives
 
 ## 🧠 Model Comparison Table & Notes
 
@@ -351,18 +348,7 @@ Below is a comparison across key dimensions. After the table, I give deeper note
 
 ---
 
-You can paste this into your MD file under a header like:
 
-```
-## Model Comparison: Gemini & LLM Alternatives
-
-[the table above]
-
-### Notes
-[the expanded notes above]
-```
-
-If you like, I can also generate a **visual chart or SVG** to embed in your docs. Do you want me to send that?
 
 [1]: https://ai.google.dev/gemini-api/docs/models?utm_source=chatgpt.com "Gemini models | Gemini API | Google AI for Developers"
 [2]: https://developers.googleblog.com/en/gemini-2-5-thinking-model-updates/?utm_source=chatgpt.com "Gemini 2.5: Updates to our family of thinking models"
